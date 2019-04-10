@@ -6,6 +6,9 @@
 
 package interfaces;
 
+import com.mysql.jdbc.Connection;
+import conexion.bd;
+
 /**
  *
  * @author daniel
@@ -15,8 +18,12 @@ public class login extends javax.swing.JFrame {
     /**
      * Creates new form login
      */
+    
+    private Connection cn ;
     public login() {
         initComponents();
+        cn = new bd().conectar();
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -29,30 +36,94 @@ public class login extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
+        btnEstudiante = new javax.swing.JButton();
+        btnDocente = new javax.swing.JButton();
+        btnAuxiliar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel1.setText("login");
+
+        btnEstudiante.setText("Estudiante");
+        btnEstudiante.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEstudianteActionPerformed(evt);
+            }
+        });
+
+        btnDocente.setText("Docente");
+        btnDocente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDocenteActionPerformed(evt);
+            }
+        });
+
+        btnAuxiliar.setText("Auxiliar");
+        btnAuxiliar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAuxiliarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(268, 268, 268)
-                .addComponent(jLabel1)
-                .addContainerGap(378, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(97, 97, 97)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(256, 256, 256)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnEstudiante, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnDocente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnAuxiliar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap(329, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(50, 50, 50)
+                .addGap(38, 38, 38)
                 .addComponent(jLabel1)
-                .addContainerGap(296, Short.MAX_VALUE))
+                .addGap(35, 35, 35)
+                .addComponent(btnEstudiante)
+                .addGap(18, 18, 18)
+                .addComponent(btnDocente)
+                .addGap(18, 18, 18)
+                .addComponent(btnAuxiliar)
+                .addContainerGap(138, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnDocenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDocenteActionPerformed
+        // TODO add your handling code here:
+        docente d = new docente();
+        //enciamos la conexion al nuevo frame
+        d.setConexion (cn);
+        d.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnDocenteActionPerformed
+
+    private void btnEstudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEstudianteActionPerformed
+        // TODO add your handling code here:
+        estudiante e = new estudiante();
+        e.setConexion(cn);
+        e.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnEstudianteActionPerformed
+
+    private void btnAuxiliarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAuxiliarActionPerformed
+        // TODO add your handling code here:
+        auxiliar a = new auxiliar();
+        a.setConexion(cn);
+        a.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnAuxiliarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -90,6 +161,9 @@ public class login extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAuxiliar;
+    private javax.swing.JButton btnDocente;
+    private javax.swing.JButton btnEstudiante;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 }

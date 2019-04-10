@@ -6,6 +6,9 @@
 
 package interfaces;
 
+import com.mysql.jdbc.Connection;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author daniel
@@ -15,10 +18,16 @@ public class auxiliar extends javax.swing.JFrame {
     /**
      * Creates new form auxiliar
      */
-    public auxiliar() {
+    private Connection cn;
+    public auxiliar(){
         initComponents();
+        cn = null;
+        setLocationRelativeTo(null);
     }
-
+    //actualiza la conexion
+    public void setConexion(Connection cn){
+        this.cn = cn;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -28,21 +37,48 @@ public class auxiliar extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        btnCerrar = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        btnCerrar.setText("Cerrar Sesion");
+        btnCerrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCerrarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(256, Short.MAX_VALUE)
+                .addComponent(btnCerrar)
+                .addGap(47, 47, 47))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addComponent(btnCerrar)
+                .addContainerGap(256, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarActionPerformed
+         try {
+            cn.close();
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null,e);
+        }finally{
+            login l = new login();
+            l.setVisible(true);
+            this.dispose();
+        }
+    }//GEN-LAST:event_btnCerrarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -80,5 +116,6 @@ public class auxiliar extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCerrar;
     // End of variables declaration//GEN-END:variables
 }
