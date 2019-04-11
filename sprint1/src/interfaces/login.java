@@ -8,6 +8,12 @@ package interfaces;
 
 import com.mysql.jdbc.Connection;
 import conexion.bd;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -25,6 +31,22 @@ public class login extends javax.swing.JFrame {
         cn = new bd().conectar();
         setLocationRelativeTo(null);
     }
+    boolean ingresarDocente(String Usuario, String Contraseña){
+        boolean ver = false;
+        int respuesta = 0;
+        String sql = "SELECT count(*) FROM login WHERE usuario = '" + Usuario + "'AND  contraseña = '" + Contraseña + "' ";
+            Statement sd;
+            try {
+                sd = cn.createStatement();
+                ResultSet sf = sd.executeQuery(sql);
+                while(sf.next()){
+                   respuesta = sf.getInt(1); } 
+                 if(respuesta == 1){
+                        ver = true;}
+        } catch (SQLException ex) {
+            Logger.getLogger(login.class.getName()).log(Level.SEVERE, null, ex);}
+            return ver;
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -35,95 +57,99 @@ public class login extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        btnEstudiante = new javax.swing.JButton();
-        btnDocente = new javax.swing.JButton();
-        btnAuxiliar = new javax.swing.JButton();
+        jLabelLogin = new javax.swing.JLabel();
+        btnIngresar = new javax.swing.JButton();
+        jComboBoxLogin = new javax.swing.JComboBox();
+        jLabelUsuario = new javax.swing.JLabel();
+        jLabelContra = new javax.swing.JLabel();
+        jTextFieldUsuario = new javax.swing.JTextField();
+        jPasswordField = new javax.swing.JPasswordField();
+        jLabelfondo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel1.setText("login");
+        jLabelLogin.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabelLogin.setText("login");
+        getContentPane().add(jLabelLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 50, 64, -1));
 
-        btnEstudiante.setText("Estudiante");
-        btnEstudiante.addActionListener(new java.awt.event.ActionListener() {
+        btnIngresar.setText("Ingresar");
+        btnIngresar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEstudianteActionPerformed(evt);
+                btnIngresarActionPerformed(evt);
             }
         });
+        getContentPane().add(btnIngresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(313, 200, 180, -1));
 
-        btnDocente.setText("Docente");
-        btnDocente.addActionListener(new java.awt.event.ActionListener() {
+        jComboBoxLogin.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Docente", "Auxiliar", "Estudiante" }));
+        jComboBoxLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDocenteActionPerformed(evt);
+                jComboBoxLoginActionPerformed(evt);
             }
         });
+        getContentPane().add(jComboBoxLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 160, 170, 25));
 
-        btnAuxiliar.setText("Auxiliar");
-        btnAuxiliar.addActionListener(new java.awt.event.ActionListener() {
+        jLabelUsuario.setText("Usuario");
+        getContentPane().add(jLabelUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 100, -1, -1));
+
+        jLabelContra.setText("Contraseña");
+        getContentPane().add(jLabelContra, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 130, -1, -1));
+
+        jTextFieldUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAuxiliarActionPerformed(evt);
+                jTextFieldUsuarioActionPerformed(evt);
             }
         });
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(97, 97, 97)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(256, 256, 256)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnEstudiante, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnDocente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnAuxiliar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap(329, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(38, 38, 38)
-                .addComponent(jLabel1)
-                .addGap(35, 35, 35)
-                .addComponent(btnEstudiante)
-                .addGap(18, 18, 18)
-                .addComponent(btnDocente)
-                .addGap(18, 18, 18)
-                .addComponent(btnAuxiliar)
-                .addContainerGap(138, Short.MAX_VALUE))
-        );
+        getContentPane().add(jTextFieldUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 100, 260, -1));
+        getContentPane().add(jPasswordField, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 130, 260, -1));
+        getContentPane().add(jLabelfondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 720, 370));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnDocenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDocenteActionPerformed
-        // TODO add your handling code here:
-        docente d = new docente();
-        //enciamos la conexion al nuevo frame
-        d.setConexion (cn);
-        d.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_btnDocenteActionPerformed
+    private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
+       //agarramos los datos de ingreso
+       String usuario = jTextFieldUsuario.getText();
+       String contraseña = String.valueOf(jPasswordField.getPassword());
+       String Item = jComboBoxLogin.getSelectedItem().toString();
+       if(Item == "Docente"){
+           if(ingresarDocente(usuario,contraseña) == true){
+            docente d = new docente();
+            d.setConexion (cn);
+            d.setVisible(true);
+            this.dispose();
+           }else{
+            JOptionPane.showMessageDialog(null, "No existe el usuario al que trato de ingresar");
+           }
+       }else{
+           if(Item == "Auxiliar"){
+            // TODO add your handling code here:
+            auxiliar a = new auxiliar();
+            //enciamos la conexion al nuevo frame
+            a.setConexion (cn);
+            a.setVisible(true);
+            this.dispose();
+           }else{
+            if(Item == "Estudiante"){
+               // TODO add your handling code here:
+            estudiante e = new estudiante();
+            //enciamos la conexion al nuevo frame
+            e.setConexion (cn);
+            e.setVisible(true);
+            this.dispose();
+            }
+           }
+       }
+       
+    }//GEN-LAST:event_btnIngresarActionPerformed
 
-    private void btnEstudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEstudianteActionPerformed
+    private void jComboBoxLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxLoginActionPerformed
         // TODO add your handling code here:
-        estudiante e = new estudiante();
-        e.setConexion(cn);
-        e.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_btnEstudianteActionPerformed
+    }//GEN-LAST:event_jComboBoxLoginActionPerformed
 
-    private void btnAuxiliarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAuxiliarActionPerformed
+    private void jTextFieldUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldUsuarioActionPerformed
         // TODO add your handling code here:
-        auxiliar a = new auxiliar();
-        a.setConexion(cn);
-        a.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_btnAuxiliarActionPerformed
+    }//GEN-LAST:event_jTextFieldUsuarioActionPerformed
 
     /**
      * @param args the command line arguments
@@ -161,9 +187,13 @@ public class login extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAuxiliar;
-    private javax.swing.JButton btnDocente;
-    private javax.swing.JButton btnEstudiante;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton btnIngresar;
+    private javax.swing.JComboBox jComboBoxLogin;
+    private javax.swing.JLabel jLabelContra;
+    private javax.swing.JLabel jLabelLogin;
+    private javax.swing.JLabel jLabelUsuario;
+    private javax.swing.JLabel jLabelfondo;
+    private javax.swing.JPasswordField jPasswordField;
+    private javax.swing.JTextField jTextFieldUsuario;
     // End of variables declaration//GEN-END:variables
 }

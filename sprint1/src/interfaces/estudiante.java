@@ -58,7 +58,7 @@ public class estudiante extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(257, Short.MAX_VALUE)
+                .addContainerGap(493, Short.MAX_VALUE)
                 .addComponent(btnCerrar)
                 .addGap(46, 46, 46))
         );
@@ -67,7 +67,7 @@ public class estudiante extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(29, 29, 29)
                 .addComponent(btnCerrar)
-                .addContainerGap(248, Short.MAX_VALUE))
+                .addContainerGap(328, Short.MAX_VALUE))
         );
 
         pack();
