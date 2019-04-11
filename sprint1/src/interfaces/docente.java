@@ -94,7 +94,7 @@ public class docente extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(238, Short.MAX_VALUE)
+                .addContainerGap(432, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnCerrar)
                     .addComponent(btnSubir))
@@ -107,7 +107,7 @@ public class docente extends javax.swing.JFrame {
                 .addComponent(btnCerrar)
                 .addGap(81, 81, 81)
                 .addComponent(btnSubir)
-                .addContainerGap(162, Short.MAX_VALUE))
+                .addContainerGap(235, Short.MAX_VALUE))
         );
 
         pack();
