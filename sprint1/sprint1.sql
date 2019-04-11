@@ -15,6 +15,21 @@ CREATE DATABASE IF NOT EXISTS `sprint1` /*!40100 DEFAULT CHARACTER SET latin1 */
 USE `sprint1`;
 
 
+-- Volcando estructura para tabla sprint1.cursos
+CREATE TABLE IF NOT EXISTS `cursos` (
+  `nrocurso` int(11) NOT NULL AUTO_INCREMENT,
+  `nombrecurso` varchar(50) NOT NULL,
+  `visible` int(11) NOT NULL,
+  PRIMARY KEY (`nrocurso`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+-- Volcando datos para la tabla sprint1.cursos: ~0 rows (aproximadamente)
+/*!40000 ALTER TABLE `cursos` DISABLE KEYS */;
+INSERT INTO `cursos` (`nrocurso`, `nombrecurso`, `visible`) VALUES
+	(1, 'sisinf2', 1);
+/*!40000 ALTER TABLE `cursos` ENABLE KEYS */;
+
+
 -- Volcando estructura para tabla sprint1.documentos
 CREATE TABLE IF NOT EXISTS `documentos` (
   `coddocumento` int(11) NOT NULL AUTO_INCREMENT,
@@ -36,7 +51,7 @@ CREATE TABLE IF NOT EXISTS `login` (
   PRIMARY KEY (`nroingreso`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
--- Volcando datos para la tabla sprint1.login: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla sprint1.login: ~1 rows (aproximadamente)
 /*!40000 ALTER TABLE `login` DISABLE KEYS */;
 INSERT INTO `login` (`nroingreso`, `usuario`, `contraseña`) VALUES
 	(1, 'daniel', 'daniel');
