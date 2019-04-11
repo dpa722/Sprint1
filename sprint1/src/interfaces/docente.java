@@ -7,6 +7,19 @@
 package interfaces;
 
 import com.mysql.jdbc.Connection;
+import java.awt.Image;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 /**
@@ -19,6 +32,8 @@ public class docente extends javax.swing.JFrame {
      * Creates new form docente
      */
     private Connection cn;
+    private FileInputStream fi;
+    private long longitudBits;
     public docente() {
         initComponents();
         cn = null;
@@ -27,6 +42,24 @@ public class docente extends javax.swing.JFrame {
     //actualiza la conexion
     public void setConexion(Connection cn){
         this.cn = cn;
+    }
+    public int  grabar(String nombre,FileInputStream documento,long longitud){
+
+        int rsu = 0;
+        String sql = "INSERT INTO documentos(nombredocumento,documento) VALUES (?,?)";
+        if(cn == null){
+            JOptionPane.showMessageDialog(null, "no se puedo conectar con la base de datos");
+        }else{
+            try{
+                 PreparedStatement ps = cn.prepareStatement(sql);
+                 ps.setString(1,nombre);
+                 ps.setBlob(2,documento,longitud);
+                 rsu = ps.executeUpdate();
+            }catch(SQLException ex){
+                ex.printStackTrace();
+            }
+        }
+        return rsu;
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -38,6 +71,7 @@ public class docente extends javax.swing.JFrame {
     private void initComponents() {
 
         btnCerrar = new javax.swing.JButton();
+        btnSubir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -48,13 +82,22 @@ public class docente extends javax.swing.JFrame {
             }
         });
 
+        btnSubir.setText("Subir Documento");
+        btnSubir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSubirActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(254, Short.MAX_VALUE)
-                .addComponent(btnCerrar)
+                .addContainerGap(238, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnCerrar)
+                    .addComponent(btnSubir))
                 .addGap(49, 49, 49))
         );
         layout.setVerticalGroup(
@@ -62,7 +105,9 @@ public class docente extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(btnCerrar)
-                .addContainerGap(266, Short.MAX_VALUE))
+                .addGap(81, 81, 81)
+                .addComponent(btnSubir)
+                .addContainerGap(162, Short.MAX_VALUE))
         );
 
         pack();
@@ -79,6 +124,35 @@ public class docente extends javax.swing.JFrame {
             this.dispose();
         }
     }//GEN-LAST:event_btnCerrarActionPerformed
+
+    private void btnSubirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubirActionPerformed
+
+        //codigo para insertar en la base de datos
+        File archivo;
+        JFileChooser se = new JFileChooser();
+        se.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        int estado = se.showOpenDialog(null);
+        if(estado == JFileChooser.APPROVE_OPTION){
+            try {
+                archivo = se.getSelectedFile();
+                fi = new FileInputStream(se.getSelectedFile());//archivo seleccionado
+                //averiguamos cantidad de bits
+                this.longitudBits = archivo.length();
+                if(grabar(archivo.getName(),fi,longitudBits)!=0){
+                    JOptionPane.showMessageDialog(null,"Insertado correcto");
+                }else{
+                    JOptionPane.showMessageDialog(null,"Fallo al insertar");
+                } 
+            } catch (FileNotFoundException ex) {
+                ex.printStackTrace();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "archivo no seleccionado");
+        }
+       
+    }//GEN-LAST:event_btnSubirActionPerformed
 
     /**
      * @param args the command line arguments
@@ -117,5 +191,6 @@ public class docente extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCerrar;
+    private javax.swing.JButton btnSubir;
     // End of variables declaration//GEN-END:variables
 }
