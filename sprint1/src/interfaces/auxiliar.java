@@ -6,7 +6,8 @@
 
 package interfaces;
 
-import com.mysql.jdbc.Connection;
+
+import java.sql.Connection;
 import javax.swing.JOptionPane;
 
 /**
