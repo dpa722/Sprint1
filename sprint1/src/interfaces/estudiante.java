@@ -7,6 +7,7 @@
 package interfaces;
 
 import com.mysql.jdbc.Connection;
+import conexion.bd;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,7 +26,7 @@ public class estudiante extends javax.swing.JFrame {
    
     public estudiante() {
         initComponents();
-        this.cn = null;
+        cn = new bd().conectar();
         setLocationRelativeTo(null);
     }
     //actualiza la conexion
@@ -43,6 +44,7 @@ public class estudiante extends javax.swing.JFrame {
     private void initComponents() {
 
         btnCerrar = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -50,6 +52,13 @@ public class estudiante extends javax.swing.JFrame {
         btnCerrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCerrarActionPerformed(evt);
+            }
+        });
+
+        jButton1.setText("cursos");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
             }
         });
 
@@ -61,13 +70,19 @@ public class estudiante extends javax.swing.JFrame {
                 .addContainerGap(493, Short.MAX_VALUE)
                 .addComponent(btnCerrar)
                 .addGap(46, 46, 46))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(28, 28, 28)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(29, 29, 29)
                 .addComponent(btnCerrar)
-                .addContainerGap(328, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(270, Short.MAX_VALUE))
         );
 
         pack();
@@ -86,6 +101,16 @@ public class estudiante extends javax.swing.JFrame {
         }
             
     }//GEN-LAST:event_btnCerrarActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        // TODO add your handling code here:
+            cursos e = new cursos();
+            //enciamos la conexion al nuevo frame
+            e.setConexion (cn);
+            e.setVisible(true);
+            this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -124,5 +149,6 @@ public class estudiante extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCerrar;
+    private javax.swing.JButton jButton1;
     // End of variables declaration//GEN-END:variables
 }

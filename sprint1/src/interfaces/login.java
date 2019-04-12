@@ -131,7 +131,7 @@ public class login extends javax.swing.JFrame {
             this.dispose();
            }else{
             if(Item == "Estudiante"){
-               // TODO add your handling code here:
+            // TODO add your handling code here:
             estudiante e = new estudiante();
             //enciamos la conexion al nuevo frame
             e.setConexion (cn);
