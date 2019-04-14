@@ -32,4 +32,5 @@ public class bd {
         }
         return conexion;
     }
+    
 }

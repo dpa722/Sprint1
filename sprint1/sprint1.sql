@@ -59,3 +59,68 @@ INSERT INTO `login` (`nroingreso`, `usuario`, `contraseña`) VALUES
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+
+-- --------------------------------------------------------
+--
+-- Estructura de tabla para la tabla `auxiliar`
+--
+
+CREATE TABLE IF NOT EXISTS `auxiliar` (
+  `idAux` int(11) NOT NULL,
+  `nombreAux` varchar(50) NOT NULL,
+  `apellidoAux` varchar(50) NOT NULL,
+  `ciAux` int(11) NOT NULL,
+  `usuarioAux` varchar(50) NOT NULL,
+  `contraseniaAux` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `auxiliar`
+--
+
+INSERT INTO `auxiliar` (`idAux`, `nombreAux`, `apellidoAux`, `ciAux`, `usuarioAux`, `contraseniaAux`) VALUES
+(1, 'Danilo', 'Jimenez Mamani', 1234, 'danilo', '1234');
+
+-- --------------------------------------------------------
+--
+-- Estructura de tabla para la tabla `docente`
+--
+
+CREATE TABLE IF NOT EXISTS `docente` (
+  `idDoc` int(11) NOT NULL,
+  `nombreDoc` varchar(50) NOT NULL,
+  `apellidoDoc` varchar(50) NOT NULL,
+  `ciDoc` int(11) NOT NULL,
+  `usuarioDoc` varchar(50) NOT NULL,
+  `contraseniaDoc` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `docente`
+--
+
+INSERT INTO `docente` (`idDoc`, `nombreDoc`, `apellidoDoc`, `ciDoc`, `usuarioDoc`, `contraseniaDoc`) VALUES
+(1, 'Emanuel', 'Sanchez Vargas', 1111, 'emanuel', '1234');
+
+-- --------------------------------------------------------
+--
+-- Estructura de tabla para la tabla `estudiante`
+--
+
+CREATE TABLE IF NOT EXISTS `estudiante` (
+  `idEst` int(11) NOT NULL,
+  `nombreEst` varchar(50) NOT NULL,
+  `apellidoEst` varchar(50) NOT NULL,
+  `ciEst` int(11) NOT NULL,
+  `usuarioEst` varchar(50) NOT NULL,
+  `contraseniaEst` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `estudiante`
+--
+
+INSERT INTO `estudiante` (`idEst`, `nombreEst`, `apellidoEst`, `ciEst`, `usuarioEst`, `contraseniaEst`) VALUES
+(1, 'Micaela', 'Salvatierra Guzman', 1212, 'micaela', '1234');
+
+-- --------------------------------------------------------

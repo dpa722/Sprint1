@@ -156,7 +156,7 @@ public class login extends javax.swing.JFrame {
        String usuario = jTextFieldUsuario.getText();
        String contraseña = String.valueOf(jPasswordField.getPassword());
        String Item = jComboBoxLogin.getSelectedItem().toString();
-       if(Item == "Docente"){
+       if(Item.equals("Docente")){
            if(ingresarDocente(usuario,contraseña) == true){
             docente d = new docente();
             d.setConexion (cn);
@@ -166,7 +166,7 @@ public class login extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "No existe el usuario al que trato de ingresar");
            }
        }else{
-           if(Item == "Auxiliar"){
+           if(Item.equals("Auxiliar")){
             // TODO add your handling code here:
             auxiliar a = new auxiliar();
             //enciamos la conexion al nuevo frame
@@ -174,7 +174,7 @@ public class login extends javax.swing.JFrame {
             a.setVisible(true);
             this.dispose();
            }else{
-            if(Item == "Estudiante"){
+            if(Item.equals("Estudiante")){
             // TODO add your handling code here:
             estudiante e = new estudiante();
             //enciamos la conexion al nuevo frame
