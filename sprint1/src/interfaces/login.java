@@ -34,7 +34,7 @@ public class login extends javax.swing.JFrame {
     boolean ingresarDocente(String Usuario, String Contraseña){
         boolean ver = false;
         int respuesta = 0;
-        String sql = "SELECT count(*) FROM login WHERE usuario = '" + Usuario + "'AND  contraseña = '" + Contraseña + "' ";
+        String sql = "SELECT count(*) FROM docente WHERE usuarioDoc = '" + Usuario + "'AND  contraseniaDoc = '" + Contraseña + "' ";
             Statement sd;
             try {
                 sd = cn.createStatement();
@@ -47,7 +47,46 @@ public class login extends javax.swing.JFrame {
             Logger.getLogger(login.class.getName()).log(Level.SEVERE, null, ex);}
             return ver;
     }
-
+    
+    boolean ingresarEstudiante(String Usuario, String Contraseña){
+        boolean ver = false;
+        int respuesta;
+        String sql = "SELECT count(*) FROM estudiante WHERE usuarioEst = '" + Usuario + "'AND  contraseniaEst = '" + Contraseña + "' ";
+        Statement sd;
+        try {
+            sd = cn.createStatement();
+            ResultSet sf = sd.executeQuery(sql);
+            while (sf.next()) {                
+                respuesta = sf.getInt(1);
+                if (respuesta == 1) {
+                    ver = true;
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return ver;
+    }
+    
+    boolean ingresarAuxiliar(String Usuario, String Contraseña){
+        boolean ver = false;
+        int respuesta;
+        String sql = "SELECT count(*) FROM auxiliar WHERE usuarioAux = '" + Usuario + "'AND  contraseniaAux = '" + Contraseña + "' ";
+        Statement sd;
+        try {
+            sd = cn.createStatement();
+            ResultSet sf = sd.executeQuery(sql);
+            while (sf.next()) {                
+                respuesta = sf.getInt(1);
+                if (respuesta == 1) {
+                    ver = true;
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return ver;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -167,20 +206,24 @@ public class login extends javax.swing.JFrame {
            }
        }else{
            if(Item.equals("Auxiliar")){
-            // TODO add your handling code here:
-            auxiliar a = new auxiliar();
-            //enciamos la conexion al nuevo frame
-            a.setConexion (cn);
-            a.setVisible(true);
-            this.dispose();
+               if (ingresarAuxiliar(usuario, contraseña)== true) {
+                   auxiliar a = new auxiliar();
+                   a.setConexion (cn);
+                   a.setVisible(true);
+                   this.dispose();
+               } else {
+                   JOptionPane.showMessageDialog(null, "No existe el usuario al que trato de ingresar");
+               }
            }else{
             if(Item.equals("Estudiante")){
-            // TODO add your handling code here:
-            estudiante e = new estudiante();
-            //enciamos la conexion al nuevo frame
-            e.setConexion (cn);
-            e.setVisible(true);
-            this.dispose();
+                if (ingresarEstudiante(usuario, contraseña)== true) {
+                    estudiante e = new estudiante();
+                    e.setConexion (cn);
+                    e.setVisible(true);
+                    this.dispose();
+                } else {
+                    JOptionPane.showMessageDialog(null, "No existe el usuario al que trato de ingresar");
+                }
             }
            }
        }
