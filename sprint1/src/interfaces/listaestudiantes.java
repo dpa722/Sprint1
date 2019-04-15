@@ -187,6 +187,6 @@ public class listaestudiantes extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     void setConexion(Connection cn) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.cn = cn;
     }
 }

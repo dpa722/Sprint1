@@ -7,15 +7,27 @@
 package interfaces;
 
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import static javax.swing.JOptionPane.INFORMATION_MESSAGE;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -29,14 +41,18 @@ public class docente extends javax.swing.JFrame {
     private Connection cn;
     private FileInputStream fi;
     private long longitudBits;
+    
     public docente() {
         initComponents();
         cn = null;
         setLocationRelativeTo(null);
+       
+        
     }
     //actualiza la conexion
     public void setConexion(Connection cn){
         this.cn = cn;
+        TablaDocumentos();
     }
     public int  grabar(String nombre,FileInputStream documento,long longitud){
 
@@ -52,9 +68,39 @@ public class docente extends javax.swing.JFrame {
                  rsu = ps.executeUpdate();
             }catch(SQLException ex){
                 ex.printStackTrace();
+            }finally{
+                TablaDocumentos();
             }
         }
         return rsu;
+    }
+ 
+    
+    public void TablaDocumentos(){
+        //creacion de la tabla de datos para empleados
+            DefaultTableModel tabla = new DefaultTableModel();
+            tabla.addColumn("ID");
+            tabla.addColumn("Nombre");
+        
+            tableDocument.setModel(tabla);
+            String sql = "SELECT * FROM documentos";
+            String datos[] = new String[2];
+            Statement sd;
+            try {
+               
+                sd = cn.createStatement();
+                ResultSet sf = sd.executeQuery(sql);
+                while(sf.next()){
+                    datos[0] = String.valueOf(sf.getInt(1));
+                    datos[1] = sf.getString(2);
+                    
+                    tabla.addRow(datos);
+                }
+                tableDocument.setModel(tabla);
+            } 
+            catch (SQLException ex) {
+                ex.printStackTrace();
+            }   
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -68,6 +114,9 @@ public class docente extends javax.swing.JFrame {
         btnCerrar = new javax.swing.JButton();
         btnSubir = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tableDocument = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -92,12 +141,24 @@ public class docente extends javax.swing.JFrame {
             }
         });
 
+        tableDocument.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane1.setViewportView(tableDocument);
+
+        jLabel1.setText("lista de documentos subidos:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(432, Short.MAX_VALUE)
+                .addContainerGap(574, Short.MAX_VALUE)
                 .addComponent(btnCerrar)
                 .addGap(65, 65, 65))
             .addGroup(layout.createSequentialGroup()
@@ -105,6 +166,13 @@ public class docente extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnSubir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(45, 45, 45)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 363, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(84, 84, 84)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -112,11 +180,16 @@ public class docente extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(btnCerrar)
-                .addGap(41, 41, 41)
-                .addComponent(btnSubir)
-                .addGap(18, 18, 18)
+                .addGap(12, 12, 12)
                 .addComponent(jButton1)
-                .addContainerGap(234, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnSubir)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 46, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 419, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -148,9 +221,9 @@ public class docente extends javax.swing.JFrame {
                 //averiguamos cantidad de bits
                 this.longitudBits = archivo.length();
                 if(grabar(archivo.getName(),fi,longitudBits)!=0){
-                    JOptionPane.showMessageDialog(null,"Insertado correcto");
+                    JOptionPane.showMessageDialog(null,"Se ha subido el documento");
                 }else{
-                    JOptionPane.showMessageDialog(null,"Fallo al insertar");
+                    JOptionPane.showMessageDialog(null,"Fallo al subir el documento");
                 } 
             } catch (FileNotFoundException ex) {
                 ex.printStackTrace();
@@ -210,5 +283,8 @@ public class docente extends javax.swing.JFrame {
     private javax.swing.JButton btnCerrar;
     private javax.swing.JButton btnSubir;
     private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable tableDocument;
     // End of variables declaration//GEN-END:variables
 }
