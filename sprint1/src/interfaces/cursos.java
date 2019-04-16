@@ -9,6 +9,16 @@ package interfaces;
 
 import conexion.bd;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import modelos.Curso;
 
 /**
  *
@@ -20,13 +30,42 @@ public class cursos extends javax.swing.JFrame {
      * Creates new form cursos
      */
     private Connection cn ;
+
     public cursos() {
         initComponents();
+        cn = new bd().conectar();
         setLocationRelativeTo(null);
-        setTitle("Cursos");
-        cn = null;
+        tablaCursos();
     }
-
+    public void setConexion(Connection cn){
+        this.cn = cn;
+    
+    }
+    void tablaCursos(){
+        //creacion de la tabla de datos para empleados
+            DefaultTableModel tabla = new DefaultTableModel();
+            tabla.addColumn("Nombre Curso");
+            tabla.addColumn("visible");
+            jtableTabla.setModel(tabla);
+            //relacionamiento con la base de bados de sistemas
+            String sql = "SELECT * FROM cursos";
+            String datos[] = new String[2];
+            Statement sd;
+            //aumentar progresivamente los datos de la tabla
+            try {
+                sd = cn.createStatement();
+                ResultSet sf = sd.executeQuery(sql);
+                while(sf.next()){
+                datos[0] = sf.getString(2);
+                datos[1] = sf.getString(3);
+                tabla.addRow(datos);
+                 } //actualizar los datos de la tabla
+            jtableTabla.setModel(tabla);
+            } 
+            catch (SQLException ex) {
+            Logger.getLogger(cursos.class.getName()).log(Level.SEVERE, null, ex);
+            }   
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -38,31 +77,39 @@ public class cursos extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tabla = new javax.swing.JTable();
+        jtableTabla = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         btnInscribir = new javax.swing.JButton();
         btnCrear = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        tabla.setModel(new javax.swing.table.DefaultTableModel(
+        jtableTabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Nombre del Curso", "Autor", "Fecha"
             }
-        ));
-        jScrollPane1.setViewportView(tabla);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                true, true, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(jtableTabla);
 
         jLabel1.setText("Lista de cursos disponibles");
 
         btnInscribir.setText("inscribirse");
 
-        btnCrear.setText("crear");
+        btnCrear.setText("crear Curso");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -73,12 +120,12 @@ public class cursos extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 415, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(48, 48, 48)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 457, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnInscribir)
                             .addComponent(btnCrear))))
-                .addContainerGap(65, Short.MAX_VALUE))
+                .addContainerGap(55, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -152,10 +199,8 @@ public class cursos extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tabla;
+    public javax.swing.JTable jtableTabla;
     // End of variables declaration//GEN-END:variables
 
-    void setConexion(Connection cn) {
-        this.cn = cn;
-    }
+
 }

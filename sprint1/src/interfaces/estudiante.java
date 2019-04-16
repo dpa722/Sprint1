@@ -104,11 +104,11 @@ public class estudiante extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCerrarActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
-            cursos e = new cursos();
-            e.setConexion (cn);
-            e.setVisible(true);
-            this.dispose();
+
+        cursos e = new cursos();
+        e.setConexion (cn);
+        e.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
