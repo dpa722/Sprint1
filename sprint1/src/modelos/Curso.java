@@ -37,8 +37,5 @@ public class Curso {
 
     public void setVisible(int visible) {
         this.visible = visible;
-    }
-    
-    
-    
+    }    
 }
