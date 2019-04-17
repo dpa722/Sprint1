@@ -106,6 +106,7 @@ public class login extends javax.swing.JFrame {
         jLabelfondo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(750, 480));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabelLogin.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -153,7 +154,7 @@ public class login extends javax.swing.JFrame {
        String usuario = jTextFieldUsuario.getText();
        String contraseña = String.valueOf(jPasswordField.getPassword());
        String Item = jComboBoxLogin.getSelectedItem().toString();
-       if(Item.equals("Docente")){
+       if(Item.equals("Docente")== true){
            if(ingresarDocente(usuario,contraseña) == true){
             docente d = new docente();
             d.setConexion (cn);
@@ -163,7 +164,7 @@ public class login extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "No existe el usuario al que trato de ingresar");
            }
        }else{
-           if(Item.equals("Auxiliar")){
+           if(Item.equals("Auxiliar")== true){
                if (ingresarAuxiliar(usuario, contraseña)== true) {
                    auxiliar a = new auxiliar();
                    a.setConexion (cn);
@@ -173,7 +174,7 @@ public class login extends javax.swing.JFrame {
                    JOptionPane.showMessageDialog(null, "No existe el usuario al que trato de ingresar");
                }
            }else{
-            if(Item.equals("Estudiante")){
+            if(Item.equals("Estudiante") == true){
                 if (ingresarEstudiante(usuario, contraseña)== true) {
                     estudiante e = new estudiante();
                     e.setConexion (cn);
@@ -184,8 +185,7 @@ public class login extends javax.swing.JFrame {
                 }
             }
            }
-       }
-       
+       }       
     }//GEN-LAST:event_btnIngresarActionPerformed
 
     private void jComboBoxLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxLoginActionPerformed

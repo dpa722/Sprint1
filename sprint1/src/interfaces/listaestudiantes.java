@@ -93,8 +93,8 @@ public class listaestudiantes extends javax.swing.JFrame {
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(21, 64, 539, 258));
 
-        jLabel1.setText("Lista de estudiantes en el cursos impartido");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 30, -1, 26));
+        jLabel1.setText("LISTA DE ESTUDIANTES DEL CURSO");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 30, 190, 26));
 
         jButton1.setText("volver");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -111,7 +111,6 @@ public class listaestudiantes extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        //regresar al docente
         docente d = new docente();
         d.setConexion (cn);
         d.setVisible(true);

@@ -9,10 +9,13 @@ package interfaces;
 
 import conexion.bd;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -29,6 +32,32 @@ public class estudiante extends javax.swing.JFrame {
         initComponents();
         cn = new bd().conectar();
         setLocationRelativeTo(null);
+        notificacion();
+    }
+    void notificacion(){
+        //creacion de la tabla de datos para empleados
+            DefaultTableModel tabla = new DefaultTableModel();
+            tabla.addColumn("Nro Notificacion");
+            tabla.addColumn("Mensaje");
+            jTable1.setModel(tabla);
+            //relacionamiento con la base de bados de sistemas
+            String sql = "SELECT * FROM notificacion";
+            String datos[] = new String[2];
+            Statement sd;
+            //aumentar progresivamente los datos de la tabla
+            try {
+                sd = cn.createStatement();
+                ResultSet sf = sd.executeQuery(sql);
+                while(sf.next()){
+                datos[0] = sf.getString(1);
+                datos[1] = sf.getString(2);
+                tabla.addRow(datos);
+                 } //actualizar los datos de la tabla
+            jTable1.setModel(tabla);
+            } 
+            catch (SQLException ex) {
+            Logger.getLogger(estudiante.class.getName()).log(Level.SEVERE, null, ex);
+            }   
     }
     //actualiza la conexion
     public void setConexion(Connection cn){
@@ -46,9 +75,12 @@ public class estudiante extends javax.swing.JFrame {
 
         btnCerrar = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        fondo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(750, 480));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnCerrar.setText("Cerrar Sesion");
@@ -57,7 +89,7 @@ public class estudiante extends javax.swing.JFrame {
                 btnCerrarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnCerrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(493, 29, -1, -1));
+        getContentPane().add(btnCerrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 20, -1, -1));
 
         jButton1.setText("cursos");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -67,8 +99,24 @@ public class estudiante extends javax.swing.JFrame {
         });
         getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 40, 142, 40));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/fondo.png"))); // NOI18N
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 630, 380));
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {},
+                {},
+                {},
+                {}
+            },
+            new String [] {
+
+            }
+        ));
+        jTable1.setEnabled(false);
+        jScrollPane1.setViewportView(jTable1);
+
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 60, 490, 130));
+
+        fondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/fondo.png"))); // NOI18N
+        getContentPane().add(fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 750, 480));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -93,6 +141,7 @@ public class estudiante extends javax.swing.JFrame {
         e.setConexion (cn);
         e.setVisible(true);
         this.dispose();
+       
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
@@ -132,7 +181,9 @@ public class estudiante extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCerrar;
+    private javax.swing.JLabel fondo;
     private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }

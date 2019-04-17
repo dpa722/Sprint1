@@ -28,6 +28,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.INFORMATION_MESSAGE;
 import javax.swing.table.DefaultTableModel;
+import conexion.bd;
 
 /**
  *
@@ -46,7 +47,6 @@ public class docente extends javax.swing.JFrame {
         initComponents();
         cn = null;
         setLocationRelativeTo(null);
-       
         
     }
     //actualiza la conexion
@@ -86,8 +86,7 @@ public class docente extends javax.swing.JFrame {
             String sql = "SELECT * FROM documentos";
             String datos[] = new String[2];
             Statement sd;
-            try {
-               
+            try {            
                 sd = cn.createStatement();
                 ResultSet sf = sd.executeQuery(sql);
                 while(sf.next()){
@@ -113,6 +112,7 @@ public class docente extends javax.swing.JFrame {
 
         btnCerrar = new javax.swing.JButton();
         btnSubir = new javax.swing.JButton();
+        btnNotificacion = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tableDocument = new javax.swing.JTable();
@@ -120,6 +120,7 @@ public class docente extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(750, 480));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnCerrar.setText("Cerrar sesion");
@@ -128,7 +129,7 @@ public class docente extends javax.swing.JFrame {
                 btnCerrarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnCerrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(574, 11, -1, -1));
+        getContentPane().add(btnCerrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 20, -1, -1));
 
         btnSubir.setText("Subir Documento");
         btnSubir.addActionListener(new java.awt.event.ActionListener() {
@@ -136,15 +137,23 @@ public class docente extends javax.swing.JFrame {
                 btnSubirActionPerformed(evt);
             }
         });
-        getContentPane().add(btnSubir, new org.netbeans.lib.awtextra.AbsoluteConstraints(37, 75, -1, -1));
+        getContentPane().add(btnSubir, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 110, -1, -1));
 
-        jButton1.setText("estudiantes");
+        btnNotificacion.setText("Notificacion");
+        btnNotificacion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNotificacionActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnNotificacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 140, 120, -1));
+
+        jButton1.setText("Estudiantes");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(37, 46, 113, -1));
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 80, 120, -1));
 
         tableDocument.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -159,7 +168,7 @@ public class docente extends javax.swing.JFrame {
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(195, 71, 363, 410));
 
         jLabel1.setText("lista de documentos subidos:");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(234, 36, 242, 24));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 40, 242, 24));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/fondo.png"))); // NOI18N
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 740, 490));
@@ -216,6 +225,13 @@ public class docente extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void btnNotificacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNotificacionActionPerformed
+        // TODO add your handling code here:
+        notificacion le = new notificacion();
+        le.setConexion (cn);
+        le.setVisible(true);
+    }//GEN-LAST:event_btnNotificacionActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -253,6 +269,7 @@ public class docente extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCerrar;
+    private javax.swing.JButton btnNotificacion;
     private javax.swing.JButton btnSubir;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;

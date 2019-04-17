@@ -45,7 +45,7 @@ public class cursos extends javax.swing.JFrame {
         //creacion de la tabla de datos para empleados
             DefaultTableModel tabla = new DefaultTableModel();
             tabla.addColumn("Nombre Curso");
-            tabla.addColumn("visible");
+            tabla.addColumn("disponible");
             jtableTabla.setModel(tabla);
             //relacionamiento con la base de bados de sistemas
             String sql = "SELECT * FROM cursos";
@@ -79,8 +79,6 @@ public class cursos extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jtableTabla = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
-        btnInscribir = new javax.swing.JButton();
-        btnCrear = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -90,35 +88,21 @@ public class cursos extends javax.swing.JFrame {
 
         jtableTabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {},
+                {},
+                {},
+                {}
             },
             new String [] {
-                "Nombre del Curso", "Autor", "Fecha"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                true, true, false
-            };
 
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
             }
-        });
+        ));
         jScrollPane1.setViewportView(jtableTabla);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(61, 89, 457, 249));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(61, 89, 560, 249));
 
-        jLabel1.setText("Lista de cursos disponibles");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 60, -1, -1));
-
-        btnInscribir.setText("inscribirse");
-        jPanel1.add(btnInscribir, new org.netbeans.lib.awtextra.AbsoluteConstraints(539, 90, 90, -1));
-
-        btnCrear.setText("crear Curso");
-        jPanel1.add(btnCrear, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 120, -1, -1));
+        jLabel1.setText("LISTA DE CURSOS DISPONIBLES");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 44, 220, 30));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/fondo.png"))); // NOI18N
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 668, 390));
@@ -164,8 +148,6 @@ public class cursos extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnCrear;
-    private javax.swing.JButton btnInscribir;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
